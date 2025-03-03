@@ -1,6 +1,6 @@
 ## Simple Command Line Password Manager Program
 
-Educational Purposes Only, this is not a secure way to store passwords and is only meant for learning
+Educational Purposes Only, this is not a truly secure way to store passwords and is only meant for learning
 
 ---
 Usage `python main.py`
