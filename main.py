@@ -1,22 +1,25 @@
 import cryptography
 from cryptography.fernet import Fernet
 
-import controller
-import encrypt_model
-import command_line_view
 
+from controller import Controller
+from encrypt_model import EncryptModel
+from command_line_view import CommandLineView
 
-# import dotenv -> use this to deal with saving keys n shit
-# https://stackoverflow.com/questions/63484742/how-to-write-in-env-file-from-python-code
+import argparse
 
 if __name__ == "__main__":
     
-    # k = Fernet.generate_key()
-
-    k = b"BA760m46kKb_CLJDPsjM3ItdAdUGXw9rf6Nvn9AZiOA="
-
-    c_suite = Fernet(k)
-
-    i = input("plaintext: ")
-
-    print(c_suite.encrypt(i.encode()))
+    encrypt_model = EncryptModel()
+    command_line_view = CommandLineView()
+    controller = Controller(model=encrypt_model, view=command_line_view)
+    
+    parser = argparse.ArgumentParser()
+    parser.add_argument("-c", "--clear", action="store_true", help="clears logs")
+    
+    args = parser.parse_args()
+    
+    if args.clear:
+        controller.clear_logs()
+    else:
+        controller.run()
