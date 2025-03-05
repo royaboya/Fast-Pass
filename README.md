@@ -33,4 +33,5 @@ cryptography
 dotenv
 getpass
 logging
+mysql
 ```
