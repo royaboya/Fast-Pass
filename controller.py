@@ -11,7 +11,7 @@ class Controller:
     def run(self):
         self.view.display_splash_text()
         
-        m_exists = self.model.master_password_exists()
+        m_exists = self.model.master_password_exists()        
         
         if not(m_exists):
             new = self.view.display_create_master()

@@ -15,6 +15,7 @@ Expects an `.env` file in the same directory as `main.py`
 Points of improvement from highest priority to lowest priority (there's a lot.):
 - derive the key from the master password instead of hardcoding it since idk what to do with the key rn
 - insert master password into the sql database so that users cant just delete the .env file and replace it with their own to get access to the passwords 
+- adding onto the previous point then i would need to figure out points of recovery
 - input validation (for SQL injection)
 - output sanitization (for bad outputs incase of injection or unknown behavior)
 - fix the program flow so it doesn't need to be rerun everytime 

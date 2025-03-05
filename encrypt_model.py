@@ -99,7 +99,7 @@ class EncryptModel:
         return hash.decode('utf-8')
     
     def master_password_exists(self) -> bool:
-        return self.master_password != None
+        return self.master_password != None and self.master_password != ""
     
     def create_new_master_password(self, new_pass):
         MASTER_KEY = "MASTER_HASH"
@@ -117,7 +117,7 @@ class EncryptModel:
 
         if MASTER_KEY and SALT_KEY in config:
             set_key(env_path, MASTER_KEY, hashed)
-            set_key(env_path, SALT_KEY, self.master_salt)
+            set_key(env_path, SALT_KEY, MASTER_SALT.decode())
         else:
             with open(env_path, "a") as env_file:
                 env_file.write(f"\n{MASTER_KEY}={hashed}") 

@@ -56,3 +56,5 @@
 2025-03-05 02:38:44,758 - INFO - String Encryption event
 2025-03-05 02:38:57,297 - INFO - Get All Users Called
 2025-03-05 02:38:57,298 - INFO - String Decryption Event
+2025-03-05 03:01:07,968 - INFO - Created new master password and salt
+2025-03-05 03:01:16,380 - INFO - Get All Users Called
