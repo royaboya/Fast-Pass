@@ -29,6 +29,7 @@ Points of improvement from highest priority to lowest priority (there's a lot.):
 - check for nonexistent/duplicate name entries
 - use `tabulate` to better display data in the view
 - abstract functions to get rid of repetitive code
+- add GUI for ease of access
 
 Libraries used:
 ```
