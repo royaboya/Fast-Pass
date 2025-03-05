@@ -1,7 +1,3 @@
-import cryptography
-from cryptography.fernet import Fernet
-
-
 from controller import Controller
 from encrypt_model import EncryptModel
 from command_line_view import CommandLineView

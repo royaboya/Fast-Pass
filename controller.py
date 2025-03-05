@@ -1,6 +1,6 @@
 from getpass import getpass
 
-#TODO: encapsulate whole program in a q quit loop
+#TODO: encapsulate whole program in a q quit loop or something
 
 class Controller:
     
@@ -26,51 +26,73 @@ class Controller:
         if menu_prompt == "1":
             username, password, v = self.view.handle_new_user_entry()
 
-            # move this logic to view
             while password != v:
-                print("password is not the same, re-enter password or q to cancel")
-                v = getpass("Verify Password: ")
+                self.view.display_verify_password_entry()
+                v = self.view.request_verify_password()
             
             encrypted = self.model.encrypt(password)
             self.model.add_entry_into_mysql(username, encrypted)
             
         elif menu_prompt == "2":
-            # rename a username or password
+            username = self.view.request_enter_username()
+            usernames = self.model.get_all_usernames()
+            exists = username in usernames
             
-            pass
+            if exists:
+                ciphertext = self.model.get_encrypted_password(username)
+                extracted_ciphertext = self.model.extract_sql_fetches(ciphertext, 'password_hash')[0]
+                
+                plaintext = self.model.decrypt(extracted_ciphertext)
+                
+                self.view.display_password(username, plaintext)
+                
+
+            else:
+                print("username does not exist")
+            
         elif menu_prompt == "3":
-            # show usernames
-            # self.model.get_list_of_users()
+            usernames = self.model.get_all_usernames()
+            self.view.display_all_users(usernames)
             
-            pass
         elif menu_prompt == "4":
-            # show a username/password
-            # self.model.get_user()
-            pass
+            user = self.view.request_enter_username() #TODO: add username checks
+            flag = self.view.display_change_user_or_pass() # this should be bool, true -> false == user, pass == true?
+
+            if flag:
+                new_user = self.view.request_new_username(user)
+                self.model.change_username(user, new_user)
+            else:
+                #TODO: add another layer of confirmation here
+                new_password = self.view.request_new_password()
+                verify = self.view.request_verify_password()
+                
+                while (new_password != verify):
+                    verify = self.view.display_verify_password_entry()
+                
+                new = self.model.encrypt(new_password)
+                self.model.change_user_password(user, new)
+                self.view.display_success_password_change()
         
         elif menu_prompt == "5":
-            # delete entry
-            pass
+            user = self.view.request_enter_username()
+            # TODO: add verify (thru master password or acc pw?)
+            self.model.delete_entry(user)
         
-    def clear_logs(self):
+    def clear_logs(self) -> None:
         self.model.clear_model_logs()
         self.view.display_clear_logs()
     
-    #TODO: move to view
     def request_master_password(self):
         master = self.view.display_request_master()
         
         r = self.model.verify_master_password(master)
         
-        # while loop this in view, exit after 3 tries
+        #TODO: exit after 3 tries [?]
         while not(r):
             self.view.display_incorrect_password()
             master = self.view.display_request_master()
             r = self.model.verify_master_password(master)
             
-    def get_input(self, prompt:str):
-        return str(input(prompt)).strip()
-
         
     
     
