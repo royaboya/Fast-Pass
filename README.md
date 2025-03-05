@@ -4,7 +4,7 @@ Simple Command Line Password Manager Program
 
 ---
 
-Educational Purposes Only, this is not a truly secure way to store passwords and is only meant for learning
+### **Educational Purposes Only**, this is **not a truly secure way to store passwords** and is only meant for learning
 
 The goal for this short project was to figure out how to work with MYSQL and very general hashing and encryption schemas, and also to
 figure out how MVC design worked since I haven't touched upon that in a while.
