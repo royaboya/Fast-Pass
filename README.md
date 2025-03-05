@@ -22,7 +22,6 @@ Points of improvement from highest priority to lowest priority (there's a lot.):
 - adding onto the previous point then i would need to figure out points of recovery
 - input validation (for SQL injection)
 - output sanitization (for bad outputs incase of injection or unknown behavior)
-- fix the program flow so it doesn't need to be rerun everytime 
 - rerequest master password for every decryption action
 - making the display temporary for the plaintext passwords so theyre not left in the history
 - store more metadata in the SQL table (e.g purpose/website)

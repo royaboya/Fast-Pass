@@ -19,11 +19,14 @@ mysql> CREATE TABLE users (
 
 class EncryptModel:
 
+
+    # require sql credentials on instantiation?
     def __init__(self):
         self.master_password = None
         self.master_salt = ""
         
-        # for now while i figure out how to store keys
+        # derive key from master password instead of hardcoding 
+        # how to store master password???
         self.k = b"BA760m46kKb_CLJDPsjM3ItdAdUGXw9rf6Nvn9AZiOA="
         self.cipher_suite = Fernet(self.k)
         
@@ -35,7 +38,7 @@ class EncryptModel:
             password="kali"
         ) 
         self.cursor = self.connection.cursor(dictionary=True)
-        # self.cursor.execute("use development")
+        self.cursor.execute("use development")
         
         logging.basicConfig(
             filename="./logs/model_events.log",
@@ -85,8 +88,7 @@ class EncryptModel:
     # currently does not check for duplicates
     def add_entry_into_mysql(self, username, password):
         QUERY = "INSERT INTO users (username, password_hash, salt) VALUES (%s, %s, %s)"
-    
-        self.cursor.execute("USE development;")
+
         self.cursor.execute(QUERY, (username, password, "NO SALT"))
         self.connection.commit()
         logging.info(f"Logged entry: {username}")
@@ -128,8 +130,7 @@ class EncryptModel:
         
     def get_all_usernames(self):
         QUERY = "SELECT username FROM users"
-        
-        self.cursor.execute("USE development;")
+
         self.cursor.execute(QUERY)
         
         result = self.cursor.fetchall()
@@ -140,10 +141,8 @@ class EncryptModel:
         return users
         
     def get_encrypted_password(self, username):
-        QUERY = "SELECT password_hash FROM users WHERE username = %s"
-        
-        self.cursor.execute("USE development;") 
-        self.cursor.execute(QUERY, (username,)) # requires a comma for some reason 
+        QUERY = "SELECT password_hash FROM users WHERE username = %s"        
+        self.cursor.execute(QUERY, (username,))
         
         result = self.cursor.fetchall()
         return result
@@ -176,21 +175,18 @@ class EncryptModel:
     def change_user_password(self, username, password_cipher_text):
         QUERY = "UPDATE USERS SET password_hash = %s WHERE username = %s"
         
-        self.cursor.execute("USE development;") # move into model instantiation?
         self.cursor.execute(QUERY, (password_cipher_text, username))
         self.connection.commit()
         
     def change_username(self, username, new_username):
         QUERY = "UPDATE USERS SET username = %s WHERE username = %s"
-        
-        self.cursor.execute("USE development")
+      
         self.cursor.execute(QUERY, (new_username, username))
         self.connection.commit()
     
     def delete_entry(self, username):
         QUERY = "DELETE FROM users WHERE username = %s"
-        
-        self.cursor.execute("USE development")
+     
         self.cursor.execute(QUERY, (username,))
         self.connection.commit()        
         
