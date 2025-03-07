@@ -14,7 +14,6 @@ Usage `python main.py`
 
 Expects an `.env` file in the same directory as `main.py`
 
-
 ### TODO (when i have time)
 Points of improvement from highest priority to lowest priority (there's a lot.):
 - derive the key from the master password instead of hardcoding it since idk what to do with the key rn

@@ -146,6 +146,10 @@ class EncryptModel:
         
         result = self.cursor.fetchall()
         return result
+    
+    def user_quit(self, character):
+        # todo: check if character is within bounds
+        return character == 'q'
         
         
     def load_key(self):

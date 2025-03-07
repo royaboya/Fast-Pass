@@ -8,7 +8,6 @@ class Controller:
     def run(self):
         self.view.display_splash_text()
         
-        
         m_exists = self.model.master_password_exists() # Method should try loading from sql if one exists         
         
         if not(m_exists):
@@ -17,7 +16,9 @@ class Controller:
             # save master pass into mysql
             
         else:
-            self.request_master_password()
+            fail = self.request_master_password()
+            if fail:
+                return
         
         while True:
             self.view.display_options()
@@ -68,6 +69,7 @@ class Controller:
                     
                     while (new_password != verify):
                         verify = self.view.display_verify_password_entry()
+                        
                     
                     new = self.model.encrypt(new_password)
                     self.model.change_user_password(user, new)
@@ -88,10 +90,14 @@ class Controller:
         r = self.model.verify_master_password(master)
         
         #TODO: exit after 3 tries [?]
+        failed_attempts = 0
         while not(r):
             self.view.display_incorrect_password()
             master = self.view.display_request_master()
             r = self.model.verify_master_password(master)
+            failed_attempts += 1
+            if failed_attempts > 2:
+                return True
             
         
         

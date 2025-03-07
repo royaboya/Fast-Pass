@@ -46,7 +46,7 @@ _/ __ \ /    \_/ ___\_  __ <   |  |\____ \   __\/  _ \_  __ \\
         return input(f"Enter a new username for {old_username}: ")
     
     def display_verify_password_entry(self):
-        print("password is not the same, re-enter password: ")
+        return getpass("password is not the same, re-enter password: ")
     
     def display_username_does_not_exist(self):
         print("Username does not exist!")
