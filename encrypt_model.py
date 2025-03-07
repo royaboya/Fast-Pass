@@ -1,10 +1,15 @@
-from cryptography.fernet import Fernet
 import logging
+import os
+
 import bcrypt
 import mysql.connector
 import dotenv
-import os
 from dotenv import dotenv_values, set_key
+
+from cryptography.fernet import Fernet
+from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2HMAC
+from cryptography.hazmat.primitives import hashes
+
 
 """
 the table users (for testing)
