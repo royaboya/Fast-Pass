@@ -14,8 +14,8 @@ Usage `python main.py`
 
 Expects an `.env` file in the same directory as `main.py`
 
-### TODO (when i have time)
-Points of improvement from highest priority to lowest priority (there's a lot.):
+### TODO List (when i have time)
+Points of improvement from highest priority to lowest (mostly security issues):
 - derive the key from the master password instead of hardcoding it since idk what to do with the key rn
 - insert master password into the sql database so that users cant just delete the .env file and replace it with their own to get access to the passwords 
 - adding onto the previous point then i would need to figure out points of recovery

@@ -1,4 +1,3 @@
-
 class Controller:
     
     def __init__(self, model, view):
@@ -8,12 +7,13 @@ class Controller:
     def run(self):
         self.view.display_splash_text()
         
-        m_exists = self.model.master_password_exists() # Method should try loading from sql if one exists         
+        m_exists = self.model.master_password_exists()
+        # TODO: Method should try loading from sql if one exists         
         
         if not(m_exists):
             new = self.view.display_create_master()
             self.model.create_new_master_password(new)
-            # save master pass into mysql
+            # TODO: save master pass into mysql?
             
         else:
             fail = self.request_master_password()
@@ -56,7 +56,8 @@ class Controller:
                 self.view.display_all_users(usernames)
                 
             elif menu_prompt == "4":
-                user = self.view.request_enter_username() #TODO: add username checks
+                user = self.view.request_enter_username()
+                #TODO: add username checks
                 flag = self.view.display_change_user_or_pass()
 
                 if flag:
@@ -88,8 +89,7 @@ class Controller:
         master = self.view.display_request_master()
         
         r = self.model.verify_master_password(master)
-        
-        #TODO: exit after 3 tries [?]
+    
         failed_attempts = 0
         while not(r):
             self.view.display_incorrect_password()
@@ -102,5 +102,3 @@ class Controller:
         
         
         
-        
-    

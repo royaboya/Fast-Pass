@@ -24,13 +24,12 @@ mysql> CREATE TABLE users (
 
 class EncryptModel:
 
-
-    # require sql credentials on instantiation?
+    # TODO: require sql credentials on instantiation? not sure yet
     def __init__(self):
         self.master_password = None
         self.master_salt = ""
         
-        # derive key from master password instead of hardcoding 
+        # TODO: derive key from master password instead of hardcoding 
         # how to store master password???
         self.k = b"BA760m46kKb_CLJDPsjM3ItdAdUGXw9rf6Nvn9AZiOA="
         self.cipher_suite = Fernet(self.k)
@@ -51,7 +50,6 @@ class EncryptModel:
             format='%(asctime)s - %(levelname)s - %(message)s'
         )
         
-
     def encrypt(self, plaintext:str):
         cs = Fernet(self.k)
         logging.info("String Encryption event") 
@@ -89,9 +87,10 @@ class EncryptModel:
             self.master_password = None
             self.master_salt = None
         
-        
     # currently does not check for duplicates
     def add_entry_into_mysql(self, username, password):
+        # TODO: self.check_duplicate(username)
+        
         QUERY = "INSERT INTO users (username, password_hash, salt) VALUES (%s, %s, %s)"
 
         self.cursor.execute(QUERY, (username, password, "NO SALT"))
@@ -153,14 +152,14 @@ class EncryptModel:
         return result
     
     def user_quit(self, character):
-        # todo: check if character is within bounds
+        # TODO : check if character is within bounds
         return character == 'q'
         
         
     def load_key(self):
         pass
     
-    
+    # unused for now
     def create_new_key(self):
         # if user already has key, deny or ask for override
         metadata = {

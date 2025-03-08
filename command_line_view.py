@@ -5,6 +5,8 @@ import sys
 class CommandLineView:
     
     def display_splash_text(self) -> None:
+        #TODO: change splash text to FastPass
+        
         splash = """
                                            __                
   ____   ____   ___________ ___.__._______/  |_  ___________ 
@@ -23,7 +25,6 @@ _/ __ \ /    \_/ ___\_  __ <   |  |\____ \   __\/  _ \_  __ \\
         print(f"3. show all usernames")
         print(f"4. edit username/password")   
         print(f"5. remove entry")
-        print(f"6. [?]")
          
     
     def handle_new_user_entry(self):
@@ -55,10 +56,6 @@ _/ __ \ /    \_/ ___\_  __ <   |  |\____ \   __\/  _ \_  __ \\
         sys.stdout.write("\033[F\033[K")
         sys.stdout.flush()
     
-    
-    def display_pass(self, password):
-        print(f"{0}")
-    
     def clear_screen(self) -> None:
         cmd = "cls" if os.name == "nt" else "clear"
         os.system(cmd)
@@ -81,6 +78,7 @@ _/ __ \ /    \_/ ___\_  __ <   |  |\____ \   __\/  _ \_  __ \\
     def display_all_users(self, username_list):
         PASSWORD_PLACEHOLDER = " | Password: ************"
         
+        # compute max_len in controller?
         max_len = max(len(user) for user in username_list)
         max_len_padding = max_len + len(PASSWORD_PLACEHOLDER)
         
@@ -97,9 +95,7 @@ _/ __ \ /    \_/ ___\_  __ <   |  |\____ \   __\/  _ \_  __ \\
         print(f"Username: {username} | Password: {plaintext}")
         pass
             
-    def display_change_user_or_pass(self) -> bool:
-        # TODO: assert input is only one character long
-        
+    def display_change_user_or_pass(self) -> bool:        
         PROMPT = "Would you like to change a username or password? (enter u or p): "
         
         choice = " "
